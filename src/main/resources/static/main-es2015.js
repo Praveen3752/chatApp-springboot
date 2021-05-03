@@ -36,29 +36,29 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/chat-comp/chat-comp.component.html":
-/*!******************************************************************************************!*\
-  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/chat-comp/chat-comp.component.html ***!
-  \******************************************************************************************/
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/home/home.component.html":
+/*!********************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/home/home.component.html ***!
+  \********************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div style=\"background: #19486d;height: 45rem;\">\n<header>\n  \n</header>\n\n<div class=\"chat\">\n    <div class=\"container\">\n        <div class=\"chat-content\">\n            <div class=\"card\">\n                <ng-container *ngFor=\"let msg of chatservice.chatMessages\">\n                <div class=\"owntext\" *ngIf=\"chatservice.username == msg.user else mytext\">\n                    <div class=\"namediv\">{{msg.user}}</div>\n                    <div>{{msg.message}}</div>\n                </div>\n                <ng-template #mytext>\n                    <div class=\"otherstext\">\n                        <div class=\"namediv\">{{msg.user}}</div>\n                        <div>{{msg.message}}</div>\n                    </div>\n                </ng-template>\n                </ng-container>\n            </div>\n        </div>\n        <form (ngSubmit)=\"sendMessage()\" #sendForm=\"ngForm\">\n            <div style=\"justify-content: center;\" class=\"chat-send row\">\n              \n                <div class=\"col-5\" id=\"input-message\">\n                    <input type=\"text\" class=\"form-control\" name=\"usermsg\" id=\"msgdata\" ngModel />\n                </div>\n                <div class=\"col-2\">\n                    <button type=\"submit\" class=\"btn btn-primary\">Submit</button>\n                </div>\n            </div>\n        </form>\n    </div>\n</div>\n</div>");
+/* harmony default export */ __webpack_exports__["default"] = ("<div id=\"homeDiv\">\n    <!-- <div (click)=\"startGame()\" style=\"color:white;cursor:pointer;\">Start Game</div> -->\n    <div id=\"firstCircle\">\n        <div id=\"housieDiv\">\n            <div *ngIf=\"houseTicket\" #maindiv id=\"maindiv\">\n\n                <div (click)=\"cellClicked($event)\" class=\"rowsdata\">\n                    <div></div><div></div><div></div><div></div><div></div>\n                    <div></div><div></div><div></div><div></div>\n                </div>\n        \n                <div (click)=\"cellClicked($event)\" class=\"rowsdata\">\n                    <div></div><div></div><div></div><div></div><div></div>\n                    <div></div><div></div><div></div><div></div>\n                </div>\n        \n                <div (click)=\"cellClicked($event)\" class=\"rowsdata\">\n                    <div></div><div></div><div></div><div></div><div></div>\n                    <div></div><div></div><div></div><div></div>\n                </div>\n        \n            </div>\n            <div (click)=\"sendMessage()\" id=\"randomNumberDiv\">\n                <span id=\"randomNumber\">{{greeting}}</span>\n            </div>\n        </div>\n    </div>\n</div>");
 
 /***/ }),
 
-/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/layout/layout.component.html":
-/*!************************************************************************************!*\
-  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/layout/layout.component.html ***!
-  \************************************************************************************/
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/login-page/login-page.component.html":
+/*!********************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/login-page/login-page.component.html ***!
+  \********************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div style=\"background: linear-gradient(to right bottom,#636566, #656665, #636566);height: 45em;\">\n    <div class=\"maindiv\">\n        <input style=\"color: white;outline: none;\" placeholder=\"Enter your name\" (keyup.enter)=\"showChat()\"  type=\"text\" [(ngModel)] = \"username\" />\n        <img style=\"margin-left: 1.5rem;cursor: pointer;\" (click)=\"showChat()\" src=\"/assets/send.png\" />\n    </div>\n</div>");
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"loginimg\">\n    <div class=\"logindiv\">\n      <div>\n        <input id=\"logininput\" [(ngModel)] = \"loginName\" (keyup.enter)=\"loginCheck()\" type=\"text\" />\n        <img style=\"cursor:pointer;\" (click)=\"loginCheck()\" src=\"../assets/paper-plane.png\" />\n      </div>\n  \n      <div id=\"loginErrDiv\" *ngIf=\"loginCheckVal\">\n        *Please enter valid user name.\n      </div>\n  \n    </div>\n  </div>\n  ");
 
 /***/ }),
 
@@ -316,22 +316,68 @@ function __classPrivateFieldSet(receiver, privateMap, value) {
 
 /***/ }),
 
-/***/ "./src/app/ChatModel.ts":
-/*!******************************!*\
-  !*** ./src/app/ChatModel.ts ***!
-  \******************************/
-/*! exports provided: ChatModel */
+/***/ "./src/app/WebSocketAPI.ts":
+/*!*********************************!*\
+  !*** ./src/app/WebSocketAPI.ts ***!
+  \*********************************/
+/*! exports provided: WebSocketAPI */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ChatModel", function() { return ChatModel; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WebSocketAPI", function() { return WebSocketAPI; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
 
-class ChatModel {
-    constructor(user, message) {
-        this.user = user;
-        this.message = message;
+
+class WebSocketAPI {
+    constructor() {
+        this.webSocketEndPoint = 'http://localhost:8080/ws';
+        this.topic = "/topic/public";
+        this.msg = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"]("");
+        // this.appComponent = appComponent;
+    }
+    _connect() {
+        console.log("Initialize WebSocket Connection");
+        let ws = new SockJS(this.webSocketEndPoint);
+        this.stompClient = Stomp.over(ws);
+        const _this = this;
+        _this.stompClient.connect({}, function (frame) {
+            console.log("connected...");
+            _this.stompClient.subscribe(_this.topic, function (sdkEvent) {
+                console.log("message received...");
+                _this.onMessageReceived(sdkEvent);
+            });
+            //_this.stompClient.reconnect_delay = 2000;
+        }, this.errorCallBack);
+    }
+    ;
+    _disconnect() {
+        if (this.stompClient !== null) {
+            this.stompClient.disconnect();
+        }
+        console.log("Disconnected");
+    }
+    // on error, schedule a reconnection attempt
+    errorCallBack(error) {
+        console.log("errorCallBack -> " + error);
+        setTimeout(() => {
+            this._connect();
+        }, 5000);
+    }
+    /**
+     * Send message to sever via web socket
+     * @param {*} message
+     */
+    _send(message) {
+        console.log("calling logout api via web socket");
+        this.stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(message));
+    }
+    onMessageReceived(message) {
+        console.log("Message Recieved from Server :: " + message);
+        console.log(message.body);
+        this.msg.next(message.body);
+        //this.appComponent.handleMessage(JSON.stringify(message.body));
     }
 }
 
@@ -351,9 +397,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
-/* harmony import */ var _auth_guard_service_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./auth-guard-service.service */ "./src/app/auth-guard-service.service.ts");
-/* harmony import */ var _chat_comp_chat_comp_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./chat-comp/chat-comp.component */ "./src/app/chat-comp/chat-comp.component.ts");
-/* harmony import */ var _layout_layout_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./layout/layout.component */ "./src/app/layout/layout.component.ts");
+/* harmony import */ var _auth_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./auth.service */ "./src/app/auth.service.ts");
+/* harmony import */ var _home_home_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./home/home.component */ "./src/app/home/home.component.ts");
+/* harmony import */ var _login_page_login_page_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./login-page/login-page.component */ "./src/app/login-page/login-page.component.ts");
 
 
 
@@ -361,10 +407,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const routes = [
-    { path: "chatscreen",
-        canActivate: [_auth_guard_service_service__WEBPACK_IMPORTED_MODULE_3__["AuthGuardServiceService"]],
-        component: _chat_comp_chat_comp_component__WEBPACK_IMPORTED_MODULE_4__["ChatCompComponent"] },
-    { path: "", component: _layout_layout_component__WEBPACK_IMPORTED_MODULE_5__["LayoutComponent"] }
+    { path: 'home',
+        canActivate: [_auth_service__WEBPACK_IMPORTED_MODULE_3__["AuthService"]],
+        component: _home_home_component__WEBPACK_IMPORTED_MODULE_4__["HomeComponent"] },
+    { path: '', component: _login_page_login_page_component__WEBPACK_IMPORTED_MODULE_5__["LoginPageComponent"] }
 ];
 let AppRoutingModule = class AppRoutingModule {
 };
@@ -404,18 +450,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppComponent", function() { return AppComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
-
 
 
 let AppComponent = class AppComponent {
-    constructor(router) {
-        this.router = router;
+    constructor() {
+        this.title = 'housieProject';
     }
 };
-AppComponent.ctorParameters = () => [
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] }
-];
 AppComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
         selector: 'app-root',
@@ -444,10 +485,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
 /* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
-/* harmony import */ var _chat_comp_chat_comp_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./chat-comp/chat-comp.component */ "./src/app/chat-comp/chat-comp.component.ts");
-/* harmony import */ var _chat_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./chat.service */ "./src/app/chat.service.ts");
-/* harmony import */ var _layout_layout_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./layout/layout.component */ "./src/app/layout/layout.component.ts");
-
+/* harmony import */ var _home_home_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./home/home.component */ "./src/app/home/home.component.ts");
+/* harmony import */ var _login_page_login_page_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./login-page/login-page.component */ "./src/app/login-page/login-page.component.ts");
 
 
 
@@ -462,62 +501,18 @@ AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["NgModule"])({
         declarations: [
             _app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"],
-            _chat_comp_chat_comp_component__WEBPACK_IMPORTED_MODULE_6__["ChatCompComponent"],
-            _layout_layout_component__WEBPACK_IMPORTED_MODULE_8__["LayoutComponent"]
+            _home_home_component__WEBPACK_IMPORTED_MODULE_6__["HomeComponent"],
+            _login_page_login_page_component__WEBPACK_IMPORTED_MODULE_7__["LoginPageComponent"]
         ],
         imports: [
             _angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"],
-            _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
-            _app_routing_module__WEBPACK_IMPORTED_MODULE_4__["AppRoutingModule"]
+            _app_routing_module__WEBPACK_IMPORTED_MODULE_4__["AppRoutingModule"],
+            _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"]
         ],
-        providers: [_chat_service__WEBPACK_IMPORTED_MODULE_7__["ChatService"]],
+        providers: [],
         bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"]]
     })
 ], AppModule);
-
-
-
-/***/ }),
-
-/***/ "./src/app/auth-guard-service.service.ts":
-/*!***********************************************!*\
-  !*** ./src/app/auth-guard-service.service.ts ***!
-  \***********************************************/
-/*! exports provided: AuthGuardServiceService */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthGuardServiceService", function() { return AuthGuardServiceService; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
-/* harmony import */ var _auth_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./auth.service */ "./src/app/auth.service.ts");
-
-
-
-
-let AuthGuardServiceService = class AuthGuardServiceService {
-    constructor(auth, router) {
-        this.auth = auth;
-        this.router = router;
-    }
-    canActivate(route, state) {
-        if (!this.auth.isLoggedIn()) {
-            this.router.navigateByUrl('');
-        }
-        return this.auth.isLoggedIn();
-    }
-};
-AuthGuardServiceService.ctorParameters = () => [
-    { type: _auth_service__WEBPACK_IMPORTED_MODULE_3__["AuthService"] },
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] }
-];
-AuthGuardServiceService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
-        providedIn: 'root'
-    })
-], AuthGuardServiceService);
 
 
 
@@ -535,17 +530,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthService", function() { return AuthService; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+/* harmony import */ var _main_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./main.service */ "./src/app/main.service.ts");
+
+
 
 
 let AuthService = class AuthService {
-    constructor() { }
-    isLoggedIn() {
-        return (localStorage.getItem('loggedName') && localStorage.getItem('loggedName') != "" && localStorage.getItem('loggedName') != null);
+    constructor(service, router) {
+        this.service = service;
+        this.router = router;
     }
-    loginUser(name) {
-        localStorage.setItem('loggedName', name);
+    canActivate(route, state) {
+        if (!this.service.isUserLoggedIn()) {
+            this.router.navigateByUrl('');
+        }
+        return this.service.isUserLoggedIn();
+        // throw new Error('Method not implemented.');
     }
 };
+AuthService.ctorParameters = () => [
+    { type: _main_service__WEBPACK_IMPORTED_MODULE_3__["MainService"] },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] }
+];
 AuthService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
         providedIn: 'root'
@@ -556,196 +563,322 @@ AuthService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 
 /***/ }),
 
-/***/ "./src/app/chat-comp/chat-comp.component.css":
-/*!***************************************************!*\
-  !*** ./src/app/chat-comp/chat-comp.component.css ***!
-  \***************************************************/
+/***/ "./src/app/home/home.component.css":
+/*!*****************************************!*\
+  !*** ./src/app/home/home.component.css ***!
+  \*****************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (".chat\r\n{\r\n    padding-top: 2rem;\r\n\r\n}\r\n\r\ndiv.chat-content\r\n{\r\n    border-radius: .25rem;\r\n    \r\n    margin-bottom: 2rem;\r\n}\r\n\r\n.card\r\n{\r\n    height: 30rem;\r\n    width: 75%;\r\n    margin: auto;\r\n    /* background: url(/assets/architecture-blur-buildings-cars-204366.jpg); */\r\n    background: #ffffffd6;\r\n    color: white;\r\n    overflow-y: auto;\r\n    background-size: 100% 100%;\r\n}\r\n\r\n.namediv\r\n{\r\n    font-weight: 600;\r\n    color: #CDDC39;\r\n}\r\n\r\n.otherstext\r\n{\r\n    padding: 1%;\r\n    margin: 1%;\r\n    text-align: left;\r\n    margin-right: 10%;\r\n    width: -webkit-fit-content;\r\n    width: -moz-fit-content;\r\n    width: fit-content;\r\n    border-radius: 11px;\r\n    background: #6c6868;\r\n}\r\n\r\n.owntext\r\n{\r\n    padding: 1%;\r\n    margin: 1%;\r\n    text-align: right;\r\n    margin-left: auto;\r\n    margin-right: 5px;\r\n    width: -webkit-fit-content;\r\n    width: -moz-fit-content;\r\n    width: fit-content;\r\n    background: #307f99;\r\n    border-radius: 11px;\r\n}\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvY2hhdC1jb21wL2NoYXQtY29tcC5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBOztJQUVJLGlCQUFpQjs7QUFFckI7O0FBRUE7O0lBRUkscUJBQXFCOztJQUVyQixtQkFBbUI7QUFDdkI7O0FBRUE7O0lBRUksYUFBYTtJQUNiLFVBQVU7SUFDVixZQUFZO0lBQ1osMEVBQTBFO0lBQzFFLHFCQUFxQjtJQUNyQixZQUFZO0lBQ1osZ0JBQWdCO0lBQ2hCLDBCQUEwQjtBQUM5Qjs7QUFFQTs7SUFFSSxnQkFBZ0I7SUFDaEIsY0FBYztBQUNsQjs7QUFFQTs7SUFFSSxXQUFXO0lBQ1gsVUFBVTtJQUNWLGdCQUFnQjtJQUNoQixpQkFBaUI7SUFDakIsMEJBQWtCO0lBQWxCLHVCQUFrQjtJQUFsQixrQkFBa0I7SUFDbEIsbUJBQW1CO0lBQ25CLG1CQUFtQjtBQUN2Qjs7QUFFQTs7SUFFSSxXQUFXO0lBQ1gsVUFBVTtJQUNWLGlCQUFpQjtJQUNqQixpQkFBaUI7SUFDakIsaUJBQWlCO0lBQ2pCLDBCQUFrQjtJQUFsQix1QkFBa0I7SUFBbEIsa0JBQWtCO0lBQ2xCLG1CQUFtQjtJQUNuQixtQkFBbUI7QUFDdkIiLCJmaWxlIjoic3JjL2FwcC9jaGF0LWNvbXAvY2hhdC1jb21wLmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuY2hhdFxyXG57XHJcbiAgICBwYWRkaW5nLXRvcDogMnJlbTtcclxuXHJcbn1cclxuXHJcbmRpdi5jaGF0LWNvbnRlbnRcclxue1xyXG4gICAgYm9yZGVyLXJhZGl1czogLjI1cmVtO1xyXG4gICAgXHJcbiAgICBtYXJnaW4tYm90dG9tOiAycmVtO1xyXG59XHJcblxyXG4uY2FyZFxyXG57XHJcbiAgICBoZWlnaHQ6IDMwcmVtO1xyXG4gICAgd2lkdGg6IDc1JTtcclxuICAgIG1hcmdpbjogYXV0bztcclxuICAgIC8qIGJhY2tncm91bmQ6IHVybCgvYXNzZXRzL2FyY2hpdGVjdHVyZS1ibHVyLWJ1aWxkaW5ncy1jYXJzLTIwNDM2Ni5qcGcpOyAqL1xyXG4gICAgYmFja2dyb3VuZDogI2ZmZmZmZmQ2O1xyXG4gICAgY29sb3I6IHdoaXRlO1xyXG4gICAgb3ZlcmZsb3cteTogYXV0bztcclxuICAgIGJhY2tncm91bmQtc2l6ZTogMTAwJSAxMDAlO1xyXG59XHJcblxyXG4ubmFtZWRpdlxyXG57XHJcbiAgICBmb250LXdlaWdodDogNjAwO1xyXG4gICAgY29sb3I6ICNDRERDMzk7XHJcbn1cclxuXHJcbi5vdGhlcnN0ZXh0XHJcbntcclxuICAgIHBhZGRpbmc6IDElO1xyXG4gICAgbWFyZ2luOiAxJTtcclxuICAgIHRleHQtYWxpZ246IGxlZnQ7XHJcbiAgICBtYXJnaW4tcmlnaHQ6IDEwJTtcclxuICAgIHdpZHRoOiBmaXQtY29udGVudDtcclxuICAgIGJvcmRlci1yYWRpdXM6IDExcHg7XHJcbiAgICBiYWNrZ3JvdW5kOiAjNmM2ODY4O1xyXG59XHJcblxyXG4ub3dudGV4dFxyXG57XHJcbiAgICBwYWRkaW5nOiAxJTtcclxuICAgIG1hcmdpbjogMSU7XHJcbiAgICB0ZXh0LWFsaWduOiByaWdodDtcclxuICAgIG1hcmdpbi1sZWZ0OiBhdXRvO1xyXG4gICAgbWFyZ2luLXJpZ2h0OiA1cHg7XHJcbiAgICB3aWR0aDogZml0LWNvbnRlbnQ7XHJcbiAgICBiYWNrZ3JvdW5kOiAjMzA3Zjk5O1xyXG4gICAgYm9yZGVyLXJhZGl1czogMTFweDtcclxufSJdfQ== */");
+/* harmony default export */ __webpack_exports__["default"] = ("#homeDiv\r\n{\r\n    background:#131111;\r\n    /* background-image: linear-gradient(147deg, #000000 0%, #04619f 74%); */\r\n    height:100vh;\r\n}\r\n\r\n#firstCircle\r\n{\r\n    width: 61%;\r\n    height: 93%;\r\n    border-radius: 50%;\r\n    margin: auto;\r\n    transform: translate(0px, 6vh);\r\n    background: #1f25252e;\r\n}\r\n\r\n#housieDiv\r\n{\r\n    box-shadow: 0px 0px 4px 1px #2c2d2dde;\r\n    width: 39%;\r\n    margin: auto;\r\n    padding: 6% 0% 15% 0%;\r\n    border-radius: 16px;\r\n    transform: translate(0px, 25px);\r\n}\r\n\r\n#maindiv\r\n{\r\n    width: -webkit-fit-content;\r\n    width: -moz-fit-content;\r\n    width: fit-content;\r\n    margin: auto;\r\n    box-shadow: 1px 2px 5px 2px #292f2f;\r\n}\r\n\r\n#maindiv > div\r\n{\r\n    margin: auto;\r\n    display: flex;\r\n    justify-content: center;\r\n}\r\n\r\n.rowsdata\r\n{\r\n    display: flex;\r\n}\r\n\r\n.rowsdata > div\r\n{\r\n    border: 1px solid #1b5652b5;\r\n    width: 34px;\r\n    height: 27px;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    color: #7dccc5;\r\n    cursor:pointer;\r\n}\r\n\r\n#randomNumberDiv\r\n{\r\n    margin-top: 50%;\r\n    height: 150px;\r\n    transform: rotateZ( \r\n45deg\r\n );\r\n    text-align: center;\r\n    width: 150px;\r\n    margin: 50% auto 0%;\r\n    border: 1px solid #365a57;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    box-shadow:1px 1px 1px 1px #454141a8;\r\n}\r\n\r\n#randomNumber\r\n{\r\n    transform: rotateZ(\r\n316deg\r\n);\r\n    color: #7dccc5;\r\n    font-size: 43px;\r\n}\r\n\r\n.selectedNumber\r\n{\r\n    background: #7dccc5;\r\n    color: black !important;\r\n    font-weight: bold;\r\n}\r\n\r\n.rotateDiv\r\n{\r\n    -webkit-animation : rotate 1s linear;\r\n            animation : rotate 1s linear;\r\n}\r\n\r\n@-webkit-keyframes rotate{\r\n    100%{\r\n        transform:rotateZ(180deg);\r\n    }\r\n}\r\n\r\n@keyframes rotate{\r\n    100%{\r\n        transform:rotateZ(180deg);\r\n    }\r\n}\r\n\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvaG9tZS9ob21lLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7O0lBRUksa0JBQWtCO0lBQ2xCLHdFQUF3RTtJQUN4RSxZQUFZO0FBQ2hCOztBQUVBOztJQUVJLFVBQVU7SUFDVixXQUFXO0lBQ1gsa0JBQWtCO0lBQ2xCLFlBQVk7SUFDWiw4QkFBOEI7SUFDOUIscUJBQXFCO0FBQ3pCOztBQUVBOztJQUVJLHFDQUFxQztJQUNyQyxVQUFVO0lBQ1YsWUFBWTtJQUNaLHFCQUFxQjtJQUNyQixtQkFBbUI7SUFDbkIsK0JBQStCO0FBQ25DOztBQUVBOztJQUVJLDBCQUFrQjtJQUFsQix1QkFBa0I7SUFBbEIsa0JBQWtCO0lBQ2xCLFlBQVk7SUFDWixtQ0FBbUM7QUFDdkM7O0FBRUE7O0lBRUksWUFBWTtJQUNaLGFBQWE7SUFDYix1QkFBdUI7QUFDM0I7O0FBRUE7O0lBRUksYUFBYTtBQUNqQjs7QUFFQTs7SUFFSSwyQkFBMkI7SUFDM0IsV0FBVztJQUNYLFlBQVk7SUFDWixhQUFhO0lBQ2IsbUJBQW1CO0lBQ25CLHVCQUF1QjtJQUN2QixjQUFjO0lBQ2QsY0FBYztBQUNsQjs7QUFFQTs7SUFFSSxlQUFlO0lBQ2YsYUFBYTtJQUNiOztFQUErQjtJQUMvQixrQkFBa0I7SUFDbEIsWUFBWTtJQUNaLG1CQUFtQjtJQUNuQix5QkFBeUI7SUFDekIsYUFBYTtJQUNiLG1CQUFtQjtJQUNuQix1QkFBdUI7SUFDdkIsb0NBQW9DO0FBQ3hDOztBQUVBOztJQUVJOztDQUE4QjtJQUM5QixjQUFjO0lBQ2QsZUFBZTtBQUNuQjs7QUFFQTs7SUFFSSxtQkFBbUI7SUFDbkIsdUJBQXVCO0lBQ3ZCLGlCQUFpQjtBQUNyQjs7QUFHQTs7SUFFSSxvQ0FBNEI7WUFBNUIsNEJBQTRCO0FBQ2hDOztBQUVBO0lBQ0k7UUFDSSx5QkFBeUI7SUFDN0I7QUFDSjs7QUFKQTtJQUNJO1FBQ0kseUJBQXlCO0lBQzdCO0FBQ0oiLCJmaWxlIjoic3JjL2FwcC9ob21lL2hvbWUuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIiNob21lRGl2XHJcbntcclxuICAgIGJhY2tncm91bmQ6IzEzMTExMTtcclxuICAgIC8qIGJhY2tncm91bmQtaW1hZ2U6IGxpbmVhci1ncmFkaWVudCgxNDdkZWcsICMwMDAwMDAgMCUsICMwNDYxOWYgNzQlKTsgKi9cclxuICAgIGhlaWdodDoxMDB2aDtcclxufVxyXG5cclxuI2ZpcnN0Q2lyY2xlXHJcbntcclxuICAgIHdpZHRoOiA2MSU7XHJcbiAgICBoZWlnaHQ6IDkzJTtcclxuICAgIGJvcmRlci1yYWRpdXM6IDUwJTtcclxuICAgIG1hcmdpbjogYXV0bztcclxuICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlKDBweCwgNnZoKTtcclxuICAgIGJhY2tncm91bmQ6ICMxZjI1MjUyZTtcclxufVxyXG5cclxuI2hvdXNpZURpdlxyXG57XHJcbiAgICBib3gtc2hhZG93OiAwcHggMHB4IDRweCAxcHggIzJjMmQyZGRlO1xyXG4gICAgd2lkdGg6IDM5JTtcclxuICAgIG1hcmdpbjogYXV0bztcclxuICAgIHBhZGRpbmc6IDYlIDAlIDE1JSAwJTtcclxuICAgIGJvcmRlci1yYWRpdXM6IDE2cHg7XHJcbiAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZSgwcHgsIDI1cHgpO1xyXG59XHJcblxyXG4jbWFpbmRpdlxyXG57XHJcbiAgICB3aWR0aDogZml0LWNvbnRlbnQ7XHJcbiAgICBtYXJnaW46IGF1dG87XHJcbiAgICBib3gtc2hhZG93OiAxcHggMnB4IDVweCAycHggIzI5MmYyZjtcclxufVxyXG5cclxuI21haW5kaXYgPiBkaXZcclxue1xyXG4gICAgbWFyZ2luOiBhdXRvO1xyXG4gICAgZGlzcGxheTogZmxleDtcclxuICAgIGp1c3RpZnktY29udGVudDogY2VudGVyO1xyXG59XHJcblxyXG4ucm93c2RhdGFcclxue1xyXG4gICAgZGlzcGxheTogZmxleDtcclxufVxyXG5cclxuLnJvd3NkYXRhID4gZGl2XHJcbntcclxuICAgIGJvcmRlcjogMXB4IHNvbGlkICMxYjU2NTJiNTtcclxuICAgIHdpZHRoOiAzNHB4O1xyXG4gICAgaGVpZ2h0OiAyN3B4O1xyXG4gICAgZGlzcGxheTogZmxleDtcclxuICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxuICAgIGNvbG9yOiAjN2RjY2M1O1xyXG4gICAgY3Vyc29yOnBvaW50ZXI7XHJcbn1cclxuXHJcbiNyYW5kb21OdW1iZXJEaXZcclxue1xyXG4gICAgbWFyZ2luLXRvcDogNTAlO1xyXG4gICAgaGVpZ2h0OiAxNTBweDtcclxuICAgIHRyYW5zZm9ybTogcm90YXRlWiggXHJcbjQ1ZGVnXHJcbiApO1xyXG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG4gICAgd2lkdGg6IDE1MHB4O1xyXG4gICAgbWFyZ2luOiA1MCUgYXV0byAwJTtcclxuICAgIGJvcmRlcjogMXB4IHNvbGlkICMzNjVhNTc7XHJcbiAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICAgIGp1c3RpZnktY29udGVudDogY2VudGVyO1xyXG4gICAgYm94LXNoYWRvdzoxcHggMXB4IDFweCAxcHggIzQ1NDE0MWE4O1xyXG59XHJcblxyXG4jcmFuZG9tTnVtYmVyXHJcbntcclxuICAgIHRyYW5zZm9ybTogcm90YXRlWihcclxuMzE2ZGVnXHJcbik7XHJcbiAgICBjb2xvcjogIzdkY2NjNTtcclxuICAgIGZvbnQtc2l6ZTogNDNweDtcclxufVxyXG5cclxuLnNlbGVjdGVkTnVtYmVyXHJcbntcclxuICAgIGJhY2tncm91bmQ6ICM3ZGNjYzU7XHJcbiAgICBjb2xvcjogYmxhY2sgIWltcG9ydGFudDtcclxuICAgIGZvbnQtd2VpZ2h0OiBib2xkO1xyXG59XHJcblxyXG5cclxuLnJvdGF0ZURpdlxyXG57XHJcbiAgICBhbmltYXRpb24gOiByb3RhdGUgMXMgbGluZWFyO1xyXG59XHJcblxyXG5Aa2V5ZnJhbWVzIHJvdGF0ZXtcclxuICAgIDEwMCV7XHJcbiAgICAgICAgdHJhbnNmb3JtOnJvdGF0ZVooMTgwZGVnKTtcclxuICAgIH1cclxufVxyXG4iXX0= */");
 
 /***/ }),
 
-/***/ "./src/app/chat-comp/chat-comp.component.ts":
-/*!**************************************************!*\
-  !*** ./src/app/chat-comp/chat-comp.component.ts ***!
-  \**************************************************/
-/*! exports provided: ChatCompComponent */
+/***/ "./src/app/home/home.component.ts":
+/*!****************************************!*\
+  !*** ./src/app/home/home.component.ts ***!
+  \****************************************/
+/*! exports provided: HomeComponent */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ChatCompComponent", function() { return ChatCompComponent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HomeComponent", function() { return HomeComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var _chat_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../chat.service */ "./src/app/chat.service.ts");
-/* harmony import */ var _ChatModel__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ChatModel */ "./src/app/ChatModel.ts");
+/* harmony import */ var _main_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../main.service */ "./src/app/main.service.ts");
+/* harmony import */ var _WebSocketAPI__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../WebSocketAPI */ "./src/app/WebSocketAPI.ts");
 
 
 
 
-let ChatCompComponent = class ChatCompComponent {
-    constructor(chatservice) {
-        this.chatservice = chatservice;
+let HomeComponent = class HomeComponent {
+    constructor(elemRef, service) {
+        this.elemRef = elemRef;
+        this.service = service;
+        this.title = "title";
+        this.houseTicket = true;
+        this.numberArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+            41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82,
+            83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99];
+        this.greeting = "hello";
     }
     ngOnInit() {
-        var that = this;
-        $("#msgdata").emojioneArea({
-            events: {
-                keyup: function (editor, event) {
-                    if (event.which == 13) {
-                        that.sendMessage();
+        this.webSocketAPI = new _WebSocketAPI__WEBPACK_IMPORTED_MODULE_3__["WebSocketAPI"]();
+        //this.fun();
+        this.connect();
+        setTimeout(() => {
+            this.fun();
+        }, 3000);
+        setTimeout(() => {
+            if (sessionStorage.getItem('username') == "praveen") {
+                this.getMessage();
+            }
+        }, 10000);
+        this.webSocketAPI.msg.subscribe(data => {
+            this.greeting = data;
+            console.log(data);
+        });
+    }
+    cellClicked(data) {
+        data.target.classList.add('selectedNumber');
+        console.log(data.target);
+    }
+    getMessage() {
+        console.log("entered get message...");
+        setInterval(() => {
+            this.sendMessage();
+        }, 5000);
+    }
+    connect() {
+        this.webSocketAPI._connect();
+    }
+    disconnect() {
+        this.webSocketAPI._disconnect();
+    }
+    sendMessage() {
+        var randomNumberDiv = this.elemRef.nativeElement.querySelectorAll("#randomNumberDiv");
+        randomNumberDiv[0].classList.add('rotateDiv');
+        this.webSocketAPI._send("praveen");
+    }
+    handleMessage(message) {
+        console.log("message received in home ");
+        this.webSocketAPI.msg.subscribe(data => {
+            console.log("message came");
+            console.log(data);
+        });
+        this.greeting = message;
+        this.greeting = "hey you";
+        console.log(this.greeting);
+    }
+    //   ngOnInit() {
+    // 	this.service.connect();
+    // 	// this.subscriptionData = this.service.getCheckGame().subscribe(data => {
+    // 	// 	//console.log(data);
+    // 	// 	if(data == true)
+    // 	// 	{
+    // 	// 		this.fun();
+    // 	// 		this.randomNumberData = this.numberArray[Math.floor(Math.random() * this.numberArray.length)];
+    // 	// 		this.service.sendNumber();
+    // 	// 		this.numberArray.filter(e => e!= this.randomNumberData);
+    // 	// 		this.service.setCheckGame(false);
+    // 	// 		this.stopSubscription();
+    // 	// 	}
+    // 	// })
+    //   }
+    //   startGame()
+    //   {
+    // 	//this.service.setCheckGame(true);
+    // 	this.service.sendMessage();
+    //   }
+    //   stopSubscription()
+    //   {
+    // 	this.subscriptionData.unsubscribe();
+    //   }
+    removeStyleData() {
+        var randomNumberDiv = this.elemRef.nativeElement.querySelectorAll("#randomNumberDiv");
+        randomNumberDiv[0].classList.remove('rotateDiv');
+    }
+    fun() {
+        //	this.service.setCheckGame();
+        //$("#maindiv").show();
+        //$(".numberBallons").parent().show();
+        var rowdataElement = this.elemRef.nativeElement.querySelectorAll('.rowsdata');
+        for (var i = 0; i < 3; i++) {
+            for (var j = 0; j < 9; j++) {
+                rowdataElement[i].children[j].innerText = "";
+            }
+        }
+        var count = 0;
+        var boolarr = [true, false];
+        var outputarr = [];
+        var rowdata = [0, 1, 2];
+        var numberdata = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90];
+        while (count < 15) {
+            for (var i = 0; i < 9; i++) {
+                if (count >= 15) {
+                    break;
+                }
+                var boolvar = boolarr[Math.floor(Math.random() * boolarr.length)];
+                if (boolvar) {
+                    var rowvar = rowdata[Math.floor(Math.random() * rowdata.length)];
+                    var temparr = numberdata.slice(i * 10, (i * 10) + 9);
+                    var printdata = temparr[Math.floor(Math.random() * temparr.length)];
+                    while (printdata == 0) {
+                        printdata = temparr[Math.floor(Math.random() * temparr.length)];
+                    }
+                    if (rowdataElement[rowvar].children[i].innerText == "") {
+                        var gotocheck = 0;
+                        var rr = rowvar;
+                        for (var b = 0; b < 3; b++) {
+                            var temp1 = rowdataElement[b].children[i].innerText;
+                            var temp2 = Number(rowdataElement[b].children[i].innerText);
+                            if ((temp1 != "" && rr < b && printdata > temp2) || (temp1 != "" && rr > b && printdata < temp2)) {
+                                gotocheck = 1;
+                                break;
+                            }
+                        }
+                        if (gotocheck == 1) {
+                            continue;
+                        }
+                        var tempcount = 0;
+                        for (var t = 0; t < rowdataElement[rowvar].children.length; t++) {
+                            if (rowdataElement[rowvar].children[t].innerText != "") {
+                                tempcount = tempcount + 1;
+                            }
+                        }
+                        if (tempcount >= 5) {
+                            continue;
+                        }
+                        rowdataElement[rowvar].children[i].innerText = printdata;
+                        var nullindex = numberdata.indexOf(printdata);
+                        numberdata[nullindex] = 0;
+                        //outputarr.push(printdata);
+                        count = count + 1;
                     }
                 }
             }
-        });
-        this.chatservice.openWebSocket();
-    }
-    ngOnDestroy() {
-        this.chatservice.closeWebSocket();
-    }
-    sendMessage() {
-        const chatmessagedata = new _ChatModel__WEBPACK_IMPORTED_MODULE_3__["ChatModel"](this.chatservice.username, $('#msgdata').data("emojioneArea").getText().trim());
-        this.chatservice.sendMessage(chatmessagedata);
-        $('#msgdata').data("emojioneArea").setText('');
-        //sendForm.controls.usermsg.reset();
+        }
     }
 };
-ChatCompComponent.ctorParameters = () => [
-    { type: _chat_service__WEBPACK_IMPORTED_MODULE_2__["ChatService"] }
+HomeComponent.ctorParameters = () => [
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"] },
+    { type: _main_service__WEBPACK_IMPORTED_MODULE_2__["MainService"] }
 ];
-ChatCompComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+HomeComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
-        selector: 'app-chat-comp',
-        template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./chat-comp.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/chat-comp/chat-comp.component.html")).default,
-        styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./chat-comp.component.css */ "./src/app/chat-comp/chat-comp.component.css")).default]
+        selector: 'app-home',
+        template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./home.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/home/home.component.html")).default,
+        styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./home.component.css */ "./src/app/home/home.component.css")).default]
     })
-], ChatCompComponent);
+], HomeComponent);
 
 
 
 /***/ }),
 
-/***/ "./src/app/chat.service.ts":
-/*!*********************************!*\
-  !*** ./src/app/chat.service.ts ***!
-  \*********************************/
-/*! exports provided: ChatService */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ChatService", function() { return ChatService; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-
-
-let ChatService = class ChatService {
-    constructor() {
-        this.chatMessages = [];
-    }
-    getName() {
-        return this.username;
-    }
-    setName(name) {
-        this.username = name;
-    }
-    openWebSocket() {
-        this.webSocket = new WebSocket("ws://localhost:8080/chat");
-        this.webSocket.onopen = (event) => {
-        };
-        this.webSocket.onmessage = (event) => {
-            //console.log(JSON.parse(event.data));
-            this.chatMessages.push(JSON.parse(event.data));
-        };
-        this.webSocket.onclose = (event) => {
-            this.closeWebSocket();
-        };
-    }
-    sendMessage(chatmodel) {
-        console.log(JSON.stringify(chatmodel));
-        this.webSocket.send(JSON.stringify(chatmodel));
-    }
-    closeWebSocket() {
-        this.webSocket.close();
-    }
-};
-ChatService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
-        providedIn: 'root'
-    })
-], ChatService);
-
-
-
-/***/ }),
-
-/***/ "./src/app/layout/layout.component.css":
-/*!*********************************************!*\
-  !*** ./src/app/layout/layout.component.css ***!
-  \*********************************************/
+/***/ "./src/app/login-page/login-page.component.css":
+/*!*****************************************************!*\
+  !*** ./src/app/login-page/login-page.component.css ***!
+  \*****************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("input\r\n{\r\n    background: #9E9E9E;\r\n    border: none;\r\n    border-radius: 3px;\r\n    height: 2rem;\r\n    border-bottom: 2px solid #4faad7;\r\n}\r\n\r\n.maindiv\r\n{\r\n    width: 50%;\r\n    margin: auto;\r\n    text-align: center;\r\n    padding-top: 9rem;\r\n}\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbGF5b3V0L2xheW91dC5jb21wb25lbnQuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBOztJQUVJLG1CQUFtQjtJQUNuQixZQUFZO0lBQ1osa0JBQWtCO0lBQ2xCLFlBQVk7SUFDWixnQ0FBZ0M7QUFDcEM7O0FBRUE7O0lBRUksVUFBVTtJQUNWLFlBQVk7SUFDWixrQkFBa0I7SUFDbEIsaUJBQWlCO0FBQ3JCIiwiZmlsZSI6InNyYy9hcHAvbGF5b3V0L2xheW91dC5jb21wb25lbnQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiaW5wdXRcclxue1xyXG4gICAgYmFja2dyb3VuZDogIzlFOUU5RTtcclxuICAgIGJvcmRlcjogbm9uZTtcclxuICAgIGJvcmRlci1yYWRpdXM6IDNweDtcclxuICAgIGhlaWdodDogMnJlbTtcclxuICAgIGJvcmRlci1ib3R0b206IDJweCBzb2xpZCAjNGZhYWQ3O1xyXG59XHJcblxyXG4ubWFpbmRpdlxyXG57XHJcbiAgICB3aWR0aDogNTAlO1xyXG4gICAgbWFyZ2luOiBhdXRvO1xyXG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG4gICAgcGFkZGluZy10b3A6IDlyZW07XHJcbn0iXX0= */");
+/* harmony default export */ __webpack_exports__["default"] = (".loginimg:before\r\n{\r\n     content: \"\";\r\n    position: absolute;\r\n    background: url('5073414.jpg');\r\n    -webkit-filter:blur(2px);\r\n            filter:blur(2px);\r\n    height: 100vh;\r\n    width: 100%;\r\n    z-index:-1;\r\n    background-repeat: no-repeat;\r\n    background-size: cover; \r\n}\r\n\r\n.logindiv\r\n{\r\n    padding: 5% 6%;\r\n    border-radius: 15px;\r\n    width: 30%;\r\n    margin: auto;\r\n    text-align: center;\r\n    transform: translate(0vh, 33vh);\r\n    background: linear-gradient(\r\n45deg\r\n, #00000061, #00000061);\r\n}\r\n\r\n#logininput\r\n{\r\n    background: none;\r\n    border: none;\r\n    border-bottom: 1px solid white;\r\n    outline: none;\r\n    color: white;\r\n}\r\n\r\n#loginErrDiv\r\n{\r\n    margin-top:15px;\r\n    color:#ce3457;\r\n}\r\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbG9naW4tcGFnZS9sb2dpbi1wYWdlLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7O0tBRUssV0FBVztJQUNaLGtCQUFrQjtJQUNsQiw4QkFBeUM7SUFDekMsd0JBQWdCO1lBQWhCLGdCQUFnQjtJQUNoQixhQUFhO0lBQ2IsV0FBVztJQUNYLFVBQVU7SUFDViw0QkFBNEI7SUFDNUIsc0JBQXNCO0FBQzFCOztBQUVBOztJQUVJLGNBQWM7SUFDZCxtQkFBbUI7SUFDbkIsVUFBVTtJQUNWLFlBQVk7SUFDWixrQkFBa0I7SUFDbEIsK0JBQStCO0lBQy9COzt1QkFBNEQ7QUFDaEU7O0FBR0E7O0lBRUksZ0JBQWdCO0lBQ2hCLFlBQVk7SUFDWiw4QkFBOEI7SUFDOUIsYUFBYTtJQUNiLFlBQVk7QUFDaEI7O0FBRUE7O0lBRUksZUFBZTtJQUNmLGFBQWE7QUFDakIiLCJmaWxlIjoic3JjL2FwcC9sb2dpbi1wYWdlL2xvZ2luLXBhZ2UuY29tcG9uZW50LmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi5sb2dpbmltZzpiZWZvcmVcclxue1xyXG4gICAgIGNvbnRlbnQ6IFwiXCI7XHJcbiAgICBwb3NpdGlvbjogYWJzb2x1dGU7XHJcbiAgICBiYWNrZ3JvdW5kOiB1cmwoLi4vLi4vYXNzZXRzLzUwNzM0MTQuanBnKTtcclxuICAgIGZpbHRlcjpibHVyKDJweCk7XHJcbiAgICBoZWlnaHQ6IDEwMHZoO1xyXG4gICAgd2lkdGg6IDEwMCU7XHJcbiAgICB6LWluZGV4Oi0xO1xyXG4gICAgYmFja2dyb3VuZC1yZXBlYXQ6IG5vLXJlcGVhdDtcclxuICAgIGJhY2tncm91bmQtc2l6ZTogY292ZXI7IFxyXG59XHJcblxyXG4ubG9naW5kaXZcclxue1xyXG4gICAgcGFkZGluZzogNSUgNiU7XHJcbiAgICBib3JkZXItcmFkaXVzOiAxNXB4O1xyXG4gICAgd2lkdGg6IDMwJTtcclxuICAgIG1hcmdpbjogYXV0bztcclxuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcclxuICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlKDB2aCwgMzN2aCk7XHJcbiAgICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoXHJcbjQ1ZGVnXHJcbiwgIzAwMDAwMDYxLCAjMDAwMDAwNjEpO1xyXG59XHJcblxyXG5cclxuI2xvZ2luaW5wdXRcclxue1xyXG4gICAgYmFja2dyb3VuZDogbm9uZTtcclxuICAgIGJvcmRlcjogbm9uZTtcclxuICAgIGJvcmRlci1ib3R0b206IDFweCBzb2xpZCB3aGl0ZTtcclxuICAgIG91dGxpbmU6IG5vbmU7XHJcbiAgICBjb2xvcjogd2hpdGU7XHJcbn1cclxuXHJcbiNsb2dpbkVyckRpdlxyXG57XHJcbiAgICBtYXJnaW4tdG9wOjE1cHg7XHJcbiAgICBjb2xvcjojY2UzNDU3O1xyXG59Il19 */");
 
 /***/ }),
 
-/***/ "./src/app/layout/layout.component.ts":
-/*!********************************************!*\
-  !*** ./src/app/layout/layout.component.ts ***!
-  \********************************************/
-/*! exports provided: LayoutComponent */
+/***/ "./src/app/login-page/login-page.component.ts":
+/*!****************************************************!*\
+  !*** ./src/app/login-page/login-page.component.ts ***!
+  \****************************************************/
+/*! exports provided: LoginPageComponent */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LayoutComponent", function() { return LayoutComponent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoginPageComponent", function() { return LoginPageComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
-/* harmony import */ var _auth_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../auth.service */ "./src/app/auth.service.ts");
-/* harmony import */ var _chat_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../chat.service */ "./src/app/chat.service.ts");
+/* harmony import */ var _main_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../main.service */ "./src/app/main.service.ts");
 
 
 
 
-
-let LayoutComponent = class LayoutComponent {
-    constructor(router, chatservice, auth) {
-        this.router = router;
-        this.chatservice = chatservice;
-        this.auth = auth;
+let LoginPageComponent = class LoginPageComponent {
+    constructor(service, route) {
+        this.service = service;
+        this.route = route;
+        // @HostListener('document:keydown', ['$event'])
+        // handleKeyboardEvent(event: KeyboardEvent) { 
+        //   console.log(event.key);
+        //   if(event.key == 'F8')
+        //   {
+        //     alert("clicked");
+        //   }
+        // }
+        this.loginName = "";
+        this.loginCheckVal = false;
     }
     ngOnInit() {
+        this.service.clearUserName();
     }
-    showChat() {
-        if (this.username == "" || this.username == null) {
-            alert("Please enter the name");
+    loginCheck() {
+        if (this.loginName == "" || this.loginName == null) {
+            this.loginCheckVal = true;
             return;
         }
-        this.chatservice.setName(this.username);
-        this.auth.loginUser(this.username);
-        this.router.navigate(['/chatscreen']);
+        this.service.setUserName(this.loginName);
+        this.loginCheckVal = false;
+        this.route.navigate(['/home']);
     }
 };
-LayoutComponent.ctorParameters = () => [
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
-    { type: _chat_service__WEBPACK_IMPORTED_MODULE_4__["ChatService"] },
-    { type: _auth_service__WEBPACK_IMPORTED_MODULE_3__["AuthService"] }
+LoginPageComponent.ctorParameters = () => [
+    { type: _main_service__WEBPACK_IMPORTED_MODULE_3__["MainService"] },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] }
 ];
-LayoutComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+LoginPageComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
-        selector: 'app-layout',
-        template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./layout.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/layout/layout.component.html")).default,
-        styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./layout.component.css */ "./src/app/layout/layout.component.css")).default]
+        selector: 'app-login-page',
+        template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./login-page.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/login-page/login-page.component.html")).default,
+        styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./login-page.component.css */ "./src/app/login-page/login-page.component.css")).default]
     })
-], LayoutComponent);
+], LoginPageComponent);
+
+
+
+/***/ }),
+
+/***/ "./src/app/main.service.ts":
+/*!*********************************!*\
+  !*** ./src/app/main.service.ts ***!
+  \*********************************/
+/*! exports provided: MainService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MainService", function() { return MainService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+
+
+
+let MainService = class MainService {
+    constructor() {
+        this.checkGame = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](false);
+        this.randomArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+            41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82,
+            83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99];
+        this.stompClient = null;
+    }
+    setUserName(name) {
+        sessionStorage.setItem('username', name);
+    }
+    clearUserName() {
+        sessionStorage.removeItem('username');
+    }
+    isUserLoggedIn() {
+        return (sessionStorage.getItem('username') != null && sessionStorage.getItem('username') != "");
+    }
+    getCheckGame() {
+        return this.checkGame.asObservable();
+    }
+    setCheckGame(data) {
+        this.checkGame.next(data);
+    }
+};
+MainService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+        providedIn: 'root'
+    })
+], MainService);
 
 
 
@@ -816,7 +949,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_2__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! E:\chatDemo-Angular\src\main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! E:\Housie Project\housieProject\src\main.ts */"./src/main.ts");
 
 
 /***/ })
